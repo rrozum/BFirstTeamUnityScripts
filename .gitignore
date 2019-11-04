@@ -1,0 +1,13 @@
+bin/
+obj/
+Properties/
+/packages/
+.idea/
+Properties.meta
+Scripts.sln
+Scripts.sln.meta
+bin.meta
+obj.meta
+Person.csproj.meta
+Scripts.sln
+Person.csproj
