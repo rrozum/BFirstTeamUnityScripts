@@ -16,7 +16,7 @@ public partial class BoardManager : MonoBehaviour
 
 
 
-    public List<List<Vector3>> connectedPosition;
+    public List<List<Vector3>> connectedPosition = new List<List<Vector3>>();
     private GameObject[,] boardPositionsFloor;
 
 
@@ -142,7 +142,7 @@ public partial class BoardManager : MonoBehaviour
         DrawCorridors(subDungeon.left);
         DrawCorridors(subDungeon.right);
 
-        //connectedPosition.Add(new List<Vector3>());
+        connectedPosition.Add(new List<Vector3>());
         foreach (Rect corridor in subDungeon.corridors)
         {
             for (int i = (int)corridor.x; i < corridor.xMax; i++)
@@ -156,27 +156,33 @@ public partial class BoardManager : MonoBehaviour
                         instance.transform.SetParent(transform);
                         //boardPositionsFloor[i, j] = instance;
                     }
-                    if (boardPositionsFloor[i, j] == null &&
+                    else if (boardPositionsFloor[i, j] == null &&
                         (boardPositionsFloor[i, j + 1] != null))
                     {
                         GameObject instance = Instantiate(door, new Vector3(i, j, -1f), Quaternion.Euler(new Vector3(0, 0, door.transform.eulerAngles.z + 180))) as GameObject;
                         instance.transform.SetParent(transform);
                         //boardPositionsFloor[i, j] = instance;
                     }
-                    if (boardPositionsFloor[i, j] == null &&
+                    else if (boardPositionsFloor[i, j] == null &&
                         (boardPositionsFloor[i - 1, j] != null))
                     {
                         GameObject instance = Instantiate(door, new Vector3(i, j, -1f), Quaternion.Euler(new Vector3(0, 0, door.transform.eulerAngles.z -  90))) as GameObject;
                         instance.transform.SetParent(transform);
                         //boardPositionsFloor[i, j] = instance;
                     }
-                    if (boardPositionsFloor[i, j] == null &&
+                    else if (boardPositionsFloor[i, j] == null &&
                         (boardPositionsFloor[i, j - 1] != null))
                     {
                         GameObject instance = Instantiate(door, new Vector3(i, j, -1f), Quaternion.identity) as GameObject;
                         instance.transform.SetParent(transform);
                         //boardPositionsFloor[i, j] = instance;
                     }
+                    //else if (boardPositionsFloor[i, j] == null)
+                    //{
+                    //    GameObject instance = Instantiate(debugSquare, new Vector3(i, j, -1f), Quaternion.identity) as GameObject;
+                    //    instance.transform.SetParent(transform);
+                    //}
+                    
                 }
             }
         }

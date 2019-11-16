@@ -11,7 +11,7 @@ public partial class BoardManager
         public int debugId;
         public List<Rect> corridors = new List<Rect>();
 
-
+        private List<List<int>> connectedRooms = new List<List<int>>();
 
         private static int debugCounter = 0;
 
@@ -100,6 +100,8 @@ public partial class BoardManager
                 int roomX = (int)Random.Range(1, rect.width - roomWidth - 1);
                 int roomY = (int)Random.Range(1, rect.height - roomHeight - 1);
 
+                if (roomWidth / 2 > roomHeight) { roomWidth = (int)rect.width / 2; }
+                else if (roomWidth < roomHeight / 2) { roomHeight = (int)rect.height / 2; }
                 // room position will be absolute in the board, not relative to the sub-dungeon
                 room = new Rect(rect.x + roomX, rect.y + roomY, roomWidth, roomHeight);
                 //Debug.Log("Created room " + room + " in sub-dungeon " + debugId + " " + rect);
@@ -112,21 +114,15 @@ public partial class BoardManager
             Rect lroom = left.GetRoom();
             Rect rroom = right.GetRoom();
 
+            //if ()
+            connectedRooms.Add(new List<int>()); 
+
             //Debug.Log("Creating corridor(s) between " + left.debugId + "(" + lroom + ") and " + right.debugId + " (" + rroom + ")");
 
             // attach the corridor to a random point in each room
             Vector2 lpoint = new Vector2((int)Random.Range(lroom.x + 1, lroom.xMax - 1), (int)Random.Range(lroom.y + 1, lroom.yMax - 1));
             Vector2 rpoint = new Vector2((int)Random.Range(rroom.x + 1, rroom.xMax - 1), (int)Random.Range(rroom.y + 1, rroom.yMax - 1));
-
-            
-            //for (int i = 0; i < connectedRoom.Count; i++) {
-            //    connectedRoom.Add(new List<int>());
-            //    for (int j = 0; j < connectedRoom[i].Count; j++)
-            //    {
-            //        connectedRoom[i].Add(left.debugId);
-            //        connectedRoom[i].Add(right.debugId);
-            //    }
-            //}
+           
 
             // always be sure that left point is on the left to simplify the code
             if (lpoint.x > rpoint.x)
@@ -138,6 +134,7 @@ public partial class BoardManager
 
             int w = (int)(lpoint.x - rpoint.x);
             int h = (int)(lpoint.y - rpoint.y);
+
 
             //Debug.Log("lpoint: " + lpoint + ", rpoint: " + rpoint + ", w: " + w + ", h: " + h);
 
