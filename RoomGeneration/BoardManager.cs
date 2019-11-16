@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public partial class BoardManager : MonoBehaviour
 {
@@ -9,14 +10,20 @@ public partial class BoardManager : MonoBehaviour
     public GameObject corridorTile;
     public GameObject wall;
     public GameObject wallAngle;
+    public GameObject door;
 
+    public GameObject debugSquare;
+
+
+
+    public List<List<Vector3>> connectedPosition;
     private GameObject[,] boardPositionsFloor;
-   
+
 
 
     public void CreateBSP(SubDungeon subDungeon)
     {
-        Debug.Log("Splitting sub-dungeon " + subDungeon.debugId + ": " + subDungeon.rect);
+        //Debug.Log("Splitting sub-dungeon " + subDungeon.debugId + ": " + subDungeon.rect);
         if (subDungeon.IAmLeaf())
         {
             // if the sub-dungeon is too large split it
@@ -27,9 +34,9 @@ public partial class BoardManager : MonoBehaviour
 
                 if (subDungeon.Split(minRoomSize, maxRoomSize))
                 {
-                    Debug.Log("Splitted sub-dungeon " + subDungeon.debugId + " in "
-                        + subDungeon.left.debugId + ": " + subDungeon.left.rect + ", "
-                        + subDungeon.right.debugId + ": " + subDungeon.right.rect);
+                    //Debug.Log("Splitted sub-dungeon " + subDungeon.debugId + " in "
+                    //    + subDungeon.left.debugId + ": " + subDungeon.left.rect + ", "
+                    //    + subDungeon.right.debugId + ": " + subDungeon.right.rect);
 
                     CreateBSP(subDungeon.left);
                     CreateBSP(subDungeon.right);
@@ -63,21 +70,21 @@ public partial class BoardManager : MonoBehaviour
                     //left wall
                     if (i == (int)subDungeon.room.x)
                     {
-                        GameObject _wall = Instantiate(wall, new Vector3(i - 1, j, 0f), Quaternion.Euler(new Vector3(0, 0, wallAngle.transform.eulerAngles.z))) as GameObject;
+                        GameObject _wall = Instantiate(wall, new Vector3(i - 1, j, 0f), Quaternion.Euler(new Vector3(0, 0, wall.transform.eulerAngles.z +90))) as GameObject;
                         _wall.transform.SetParent(parent.transform);
                     }
 
                     //bottom wall
                     if (j == (int)subDungeon.room.y)
                     {
-                        GameObject _wall = Instantiate(wall, new Vector3(i, j - 1, 0f), Quaternion.Euler(new Vector3(0, 0, wallAngle.transform.eulerAngles.z + 90))) as GameObject;
+                        GameObject _wall = Instantiate(wall, new Vector3(i, j - 1, 0f), Quaternion.Euler(new Vector3(0, 0, wall.transform.eulerAngles.z + 180))) as GameObject;
                         _wall.transform.SetParent(parent.transform);
                     }
 
                     //rigth wall
                     if (i == (int)subDungeon.room.xMax - 1)
                     {
-                        GameObject _wall = Instantiate(wall, new Vector3(i + 1, j, 0f), Quaternion.Euler(new Vector3(0, 0, wallAngle.transform.eulerAngles.z))) as GameObject;
+                        GameObject _wall = Instantiate(wall, new Vector3(i + 1, j, 0f), Quaternion.Euler(new Vector3(0, 0, wall.transform.eulerAngles.z - 90))) as GameObject;
                         _wall.transform.SetParent(parent.transform);
                     }
 
@@ -98,21 +105,21 @@ public partial class BoardManager : MonoBehaviour
                     //left up wall angle
                     if (i == (int)subDungeon.room.x && j == (int)subDungeon.room.yMax - 1)
                     {
-                        GameObject _wall = Instantiate(wallAngle, new Vector3(i - 1, j + 1, 0f), Quaternion.Euler(new Vector3(0, 0, wallAngle.transform.eulerAngles.z))) as GameObject;
+                        GameObject _wall = Instantiate(wallAngle, new Vector3(i - 1, j + 1, 0f), Quaternion.Euler(new Vector3(0, 0, wallAngle.transform.eulerAngles.z + 90))) as GameObject;
                         _wall.transform.SetParent(parent.transform);
                     }
 
                     //rigth bottom wall angle
                     if (i == (int)subDungeon.room.xMax - 1 && j == (int)subDungeon.room.y)
                     {
-                        GameObject _wall = Instantiate(wallAngle, new Vector3(i + 1, j - 1, 0f), Quaternion.Euler(new Vector3(0, 0, wallAngle.transform.eulerAngles.z + 180))) as GameObject;
+                        GameObject _wall = Instantiate(wallAngle, new Vector3(i + 1, j - 1, 0f), Quaternion.Euler(new Vector3(0, 0, wallAngle.transform.eulerAngles.z - 90))) as GameObject;
                         _wall.transform.SetParent(parent.transform);
                     }
 
                     // left bottom angle wall
                     if (i == (int)subDungeon.room.x && j == (int)subDungeon.room.y)
                     {
-                        GameObject _wall = Instantiate(wallAngle, new Vector3(i - 1, j - 1, 0f), Quaternion.Euler(new Vector3(0, 0, wallAngle.transform.eulerAngles.z + 90))) as GameObject;
+                        GameObject _wall = Instantiate(wallAngle, new Vector3(i - 1, j - 1, 0f), Quaternion.Euler(new Vector3(0, 0, wallAngle.transform.eulerAngles.z + 180))) as GameObject;
                         _wall.transform.SetParent(parent.transform);
                     }
                 }
@@ -135,17 +142,40 @@ public partial class BoardManager : MonoBehaviour
         DrawCorridors(subDungeon.left);
         DrawCorridors(subDungeon.right);
 
+        //connectedPosition.Add(new List<Vector3>());
         foreach (Rect corridor in subDungeon.corridors)
         {
             for (int i = (int)corridor.x; i < corridor.xMax; i++)
             {
                 for (int j = (int)corridor.y; j < corridor.yMax; j++)
                 {
-                    if (boardPositionsFloor[i, j] == null)
+                    if (boardPositionsFloor[i, j] == null &&
+                        (boardPositionsFloor[i + 1, j] != null))
                     {
-                        GameObject instance = Instantiate(corridorTile, new Vector3(i, j, 0f), Quaternion.identity) as GameObject;
+                        GameObject instance = Instantiate(door, new Vector3(i, j, -1f), Quaternion.Euler(new Vector3(0, 0, door.transform.eulerAngles.z + 90))) as GameObject;
                         instance.transform.SetParent(transform);
-                        boardPositionsFloor[i, j] = instance;
+                        //boardPositionsFloor[i, j] = instance;
+                    }
+                    if (boardPositionsFloor[i, j] == null &&
+                        (boardPositionsFloor[i, j + 1] != null))
+                    {
+                        GameObject instance = Instantiate(door, new Vector3(i, j, -1f), Quaternion.Euler(new Vector3(0, 0, door.transform.eulerAngles.z + 180))) as GameObject;
+                        instance.transform.SetParent(transform);
+                        //boardPositionsFloor[i, j] = instance;
+                    }
+                    if (boardPositionsFloor[i, j] == null &&
+                        (boardPositionsFloor[i - 1, j] != null))
+                    {
+                        GameObject instance = Instantiate(door, new Vector3(i, j, -1f), Quaternion.Euler(new Vector3(0, 0, door.transform.eulerAngles.z -  90))) as GameObject;
+                        instance.transform.SetParent(transform);
+                        //boardPositionsFloor[i, j] = instance;
+                    }
+                    if (boardPositionsFloor[i, j] == null &&
+                        (boardPositionsFloor[i, j - 1] != null))
+                    {
+                        GameObject instance = Instantiate(door, new Vector3(i, j, -1f), Quaternion.identity) as GameObject;
+                        instance.transform.SetParent(transform);
+                        //boardPositionsFloor[i, j] = instance;
                     }
                 }
             }
@@ -161,8 +191,11 @@ public partial class BoardManager : MonoBehaviour
         rootSubDungeon.CreateRoom();
 
         boardPositionsFloor = new GameObject[boardRows, boardColumns];
-        DrawCorridors(rootSubDungeon);
+
         DrawRooms(rootSubDungeon);
+        DrawCorridors(rootSubDungeon);
+
+        //Debug.Log(rootSubDungeon.connectedRoom);
         
     }
 }
