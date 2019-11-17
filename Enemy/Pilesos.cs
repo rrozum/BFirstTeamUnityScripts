@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class Pilesos : MonoBehaviour
 {
-    public Transform P;
+    Transform Player;
     Vector3 naprav;
     public float speed = 1f;
     bool move = true;
     public float waitT = 1f;
     void Start()
     {
-        naprav = NextNaprav(P.position);
+        Player = GameObject.Find("Player").transform; 
+        naprav = (Player.position - transform.position).normalized;
     }
     void Update()
     {
@@ -20,22 +21,18 @@ public class Pilesos : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Box") && P != null)
+        if (collision.gameObject.CompareTag("Box") && Player != null)
         {
             StartCoroutine(Wait(waitT));
             move = false;
         }
-        else if (collision.transform == P)
-            Destroy(P.gameObject);
-    }
-    Vector3 NextNaprav(Vector3 x)
-    {
-        return (x - transform.position).normalized;
+        else if (collision.transform == Player)
+            Destroy(Player.gameObject);
     }
     IEnumerator Wait(float t)
     {
         yield return new WaitForSeconds(t);
-        naprav = NextNaprav(P.position);
+        naprav = (Player.position - transform.position).normalized;
         move = true;
     }
 }
