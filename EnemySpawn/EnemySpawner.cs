@@ -25,7 +25,7 @@ public class EnemySpawner : MonoBehaviour
         for (int i = 0; i < EnemyCount; i++)
         {
             int randEnemy = Random.Range(0, 3);
-            GameObject enemy = Instantiate(EnemyType[randEnemy], new Vector3(Random.Range(transform.position.x, transform.position.x+height), Random.Range(transform.position.y, transform.position.y+ width), -1), Quaternion.identity);
+            GameObject enemy = Instantiate(EnemyType[randEnemy], new Vector3(Random.Range(transform.position.x + 1, transform.position.x+height - 1), Random.Range(transform.position.y + 1, transform.position.y+ width - 1), -1), Quaternion.identity);
             enemy.name = $"{EnemyType[randEnemy].name}";
             enemy.transform.parent = transform;
         }
