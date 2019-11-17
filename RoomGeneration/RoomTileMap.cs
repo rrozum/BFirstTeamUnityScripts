@@ -16,6 +16,8 @@ public class RoomTileMap : MonoBehaviour
 
     private bool frame = true;
 
+    public int Width;
+    public int Height;
 
     public void Awake()
     {
@@ -66,6 +68,9 @@ public class RoomTileMap : MonoBehaviour
                 player.transform.position = new Vector3(GameObject.Find("SpawnDoor").transform.position.x + 1, GameObject.Find("SpawnDoor").transform.position.y, -1);
             }
             frame = false;
+
+            EnemySpawner spawner = transform.GetComponentInParent<EnemySpawner>();
+            spawner.Spawn(Height, Width);
         }
     }
 
@@ -74,6 +79,9 @@ public class RoomTileMap : MonoBehaviour
 
         var randWidth = Random.Range(minTiles / 2, maxTile / 2);
         var randHeight = Random.Range(minTiles / 2, maxTile / 2);
+
+        Width = randWidth;
+        Height = randHeight;
 
         GameObject FloorObj = new GameObject();
         FloorObj.name = "floor";
@@ -100,8 +108,8 @@ public class RoomTileMap : MonoBehaviour
 
         int BeginX = (int)transform.position.x;
         int BeginY = (int)transform.position.y;
-        int EndX = (int)transform.position.x + randHeight;
-        int EndY = (int)transform.position.y + randWidth;
+        int EndX = (int)transform.position.x + Height;
+        int EndY = (int)transform.position.y + Width;
 
         for (int i = BeginX; i < EndX; i++)
         {
