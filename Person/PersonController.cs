@@ -6,7 +6,7 @@ namespace Person
     public class PersonController : MonoBehaviour
     {
         public float moveSpeed = 100f;
-        public Rigidbody2D rb;
+        Rigidbody2D rb;
         public Direction direction = Direction.Up;
         private SpriteRenderer _sprite;
         public bool canMove = true;
@@ -27,6 +27,7 @@ namespace Person
         private void Start()
         {
             _movement = EnumDirectionToVector2(direction);
+            rb = GetComponent<Rigidbody2D>();
         }
 
         private void Update()
