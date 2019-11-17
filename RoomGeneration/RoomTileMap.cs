@@ -215,7 +215,7 @@ public class RoomTileMap : MonoBehaviour
 
         _nextRoomDoor.name = "NexRoomDoor";
         _nextRoomDoor.transform.parent = transform.GetChild(1);
-        _nextRoomDoor.tag = "Finish";
+        _nextRoomDoor.tag = "CloseDoor";
 
         Destroy(wallTransform.GetChild(SpawnDoorIndex).gameObject);
         Destroy(nexRoomDoorSide.GetChild(NexRoomDoorIndex).gameObject);
