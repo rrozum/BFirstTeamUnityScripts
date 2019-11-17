@@ -5,16 +5,13 @@ namespace Person
 {
     public class Bullet : MonoBehaviour
     {
-        private Collider2D _collider;
-        private void Start()
-        {
-            _collider = gameObject.GetComponent<Collider2D>();
-        }
+        public GameObject brokenBulletPrefab;
 
         private void OnTriggerEnter2D(Collider2D collider)
         {
             if (!collider.gameObject.CompareTag("Player"))
             {
+                Instantiate(brokenBulletPrefab, gameObject.transform.position, gameObject.transform.rotation);
                 Destroy(gameObject);
             }
         }

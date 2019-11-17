@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &5770238338162043461
+--- !u!1 &5789533406470948094
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,39 +8,39 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5959789373574236162}
-  - component: {fileID: 1506410235322890235}
-  - component: {fileID: 5459636916946767355}
-  - component: {fileID: -4810448179755386443}
-  - component: {fileID: 3099472193748946364}
+  - component: {fileID: 4565664189264535518}
+  - component: {fileID: 8103824647049837008}
+  - component: {fileID: 9011190457076377322}
+  - component: {fileID: 1873788798047464057}
+  - component: {fileID: 5365780173182522322}
   m_Layer: 0
-  m_Name: Bullet
+  m_Name: Broken bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5959789373574236162
+--- !u!4 &4565664189264535518
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5770238338162043461}
+  m_GameObject: {fileID: 5789533406470948094}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.005, y: 0.083, z: 0}
-  m_LocalScale: {x: 0.02548201, y: 0.02548201, z: 0.02548201}
+  m_LocalPosition: {x: 1.49, y: -0.82, z: 0}
+  m_LocalScale: {x: 0.03370055, y: 0.03370055, z: 0.03370055}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &1506410235322890235
+--- !u!212 &8103824647049837008
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5770238338162043461}
+  m_GameObject: {fileID: 5789533406470948094}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -72,65 +72,63 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 8fcb68316492cc844bf638a4fdf338c3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b3bfbbb3f16f2da41b5387fb436ecb1c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.07, y: 0.07}
+  m_Size: {x: 5.12, y: 5.12}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!50 &5459636916946767355
+--- !u!50 &9011190457076377322
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5770238338162043461}
+  m_GameObject: {fileID: 5789533406470948094}
   m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &-4810448179755386443
+--- !u!114 &1873788798047464057
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5770238338162043461}
+  m_GameObject: {fileID: 5789533406470948094}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c9e4bd804a87964d963af9e9e423678, type: 3}
+  m_Script: {fileID: 11500000, guid: f31c7bab6b1271740ad116de393b0ae0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  brokenBulletPrefab: {fileID: 5789533406470948094, guid: 8bc82316ebb29c3408e543fb8683c4bc,
-    type: 3}
---- !u!58 &3099472193748946364
-CircleCollider2D:
+--- !u!70 &5365780173182522322
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5770238338162043461}
+  m_GameObject: {fileID: 5789533406470948094}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 2.52
+  m_Offset: {x: 0, y: 0.18}
+  m_Size: {x: 5.21, y: 2.18}
+  m_Direction: 1

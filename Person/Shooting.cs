@@ -10,6 +10,7 @@ namespace Person
         public GameObject bulletPrefab;
         public float bulletForce = 20f;
         public Camera camera;
+        public int bulletNumber = 10;
 
         private PersonController _personController;
         private IEnumerator _coroutine;
@@ -33,7 +34,10 @@ namespace Person
             {
                 if (!_personController.canMove)
                 {
-                    Shoot();
+                    if (bulletNumber > 0)
+                    {
+                        Shoot();
+                    }
                 }
             }
         }
@@ -61,6 +65,7 @@ namespace Person
             PersonController.Direction direction = _personController.direction;
             Vector2 mouseDirection = getDirectionFromMouse();
             rb.AddForce(mouseDirection * bulletForce, ForceMode2D.Impulse);
+            bulletNumber--;
         }
 
         private Vector2 getDirectionFromMouse()
