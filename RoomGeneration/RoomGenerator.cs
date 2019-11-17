@@ -33,6 +33,7 @@ public class RoomGenerator : MonoBehaviour
         GameObject room = new GameObject();
         room.transform.parent = transform;
         room.name = "room";
+        room.transform.position = transform.position;
         room.AddComponent<RoomTileMap>();
     }
 }

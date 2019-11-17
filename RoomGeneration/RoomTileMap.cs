@@ -68,14 +68,19 @@ public class RoomTileMap : MonoBehaviour
         DownWall.name = "DownWall";
         DownWall.transform.parent = transform.GetChild(1);
 
-        for (int i = 0; i < randHeight; i++)
+        int BeginX = (int)transform.position.x;
+        int BeginY = (int)transform.position.y;
+        int EndX = (int)transform.position.x + randHeight;
+        int EndY = (int)transform.position.y + randWidth;
+
+        for (int i = BeginX; i < EndX; i++)
         {
-            for (int j = 0; j < randWidth; j++)
+            for (int j = BeginY; j < EndY; j++)
             {
                 GameObject tile = Instantiate(floor, new Vector3(i, j, 0f), Quaternion.identity) as GameObject;
                 tile.transform.SetParent(FloorObj.transform);
 
-                if (i == 0)
+                if (i == BeginX)
                 {
                     GameObject _wall = Instantiate(wall, new Vector3(i - 1, j, 0f), Quaternion.Euler(new Vector3(0, 0, wall.transform.eulerAngles.z + 90))) as GameObject;
                     _wall.transform.SetParent(LeftWall.transform);
@@ -83,49 +88,49 @@ public class RoomTileMap : MonoBehaviour
                 }
 
                 //bottom wall
-                if (j == 0)
+                if (j == BeginY)
                 {
                     GameObject _wall = Instantiate(wall, new Vector3(i, j - 1, 0f), Quaternion.Euler(new Vector3(0, 0, wall.transform.eulerAngles.z + 180))) as GameObject;
                     _wall.transform.SetParent(DownWall.transform);
                 }
 
                 //rigth wall
-                if (i == randHeight - 1)
+                if (i == EndX - 1)
                 {
                     GameObject _wall = Instantiate(wall, new Vector3(i + 1, j, 0f), Quaternion.Euler(new Vector3(0, 0, wall.transform.eulerAngles.z - 90))) as GameObject;
                     _wall.transform.SetParent(RightWall.transform);
                 }
 
                 //up wall
-                if (j == randWidth - 1)
+                if (j == EndY - 1)
                 {
                     GameObject _wall = Instantiate(wall, new Vector3(i, j + 1, 0f), Quaternion.identity) as GameObject;
                     _wall.transform.SetParent(UpWall.transform);
                 }
 
                 //rigth up wall angle
-                if (i == randHeight - 1 && j == randWidth - 1)
+                if (i == EndX - 1 && j == EndY - 1)
                 {
                     GameObject _wall = Instantiate(wallJoin, new Vector3(i + 1, j + 1, 0f), Quaternion.identity) as GameObject;
                     _wall.transform.SetParent(WallJoinObj.transform);
                 }
 
                 //left up wall angle
-                if (i == 0 && j == randWidth - 1)
+                if (i == BeginX && j == EndY - 1)
                 {
                     GameObject _wall = Instantiate(wallJoin, new Vector3(i - 1, j + 1, 0f), Quaternion.Euler(new Vector3(0, 0, wallJoin.transform.eulerAngles.z + 90))) as GameObject;
                     _wall.transform.SetParent(WallJoinObj.transform);
                 }
 
                 //rigth bottom wall angle
-                if (i == randHeight - 1 && j == 0)
+                if (i == EndX - 1 && j == BeginY)
                 {
                     GameObject _wall = Instantiate(wallJoin, new Vector3(i + 1, j - 1, 0f), Quaternion.Euler(new Vector3(0, 0, wallJoin.transform.eulerAngles.z - 90))) as GameObject;
                     _wall.transform.SetParent(WallJoinObj.transform);
                 }
 
                 // left bottom angle wall
-                if (i == 0 && j == 0)
+                if (i == BeginX && j == BeginY)
                 {
                     GameObject _wall = Instantiate(wallJoin, new Vector3(i - 1, j - 1, 0f), Quaternion.Euler(new Vector3(0, 0, wallJoin.transform.eulerAngles.z + 180))) as GameObject;
                     _wall.transform.SetParent(WallJoinObj.transform);
@@ -174,8 +179,10 @@ public class RoomTileMap : MonoBehaviour
 
         _spawnDoor.name = "SpawnDoor";
         _spawnDoor.transform.parent = transform.GetChild(1);
+        _spawnDoor.tag = "Respawn";
         _nextRoomDoor.name = "NexRoomDoor";
         _nextRoomDoor.transform.parent = transform.GetChild(1);
+        _nextRoomDoor.tag = "Finish";
 
         Destroy(wallTransform.GetChild(SpawnDoorIndex).gameObject);
         Destroy(nexRoomDoorSide.GetChild(NexRoomDoorIndex).gameObject);
