@@ -32,6 +32,7 @@ public class RoomTileMap : MonoBehaviour
        
         Generate();
         nextSide = AddDoors();
+        //ColliderGenerator();
     }
 
     private void Start()
@@ -224,10 +225,25 @@ public class RoomTileMap : MonoBehaviour
 
     //private void ColliderGenerator()
     //{
-    //    var collider = GetComponent<PolygonCollider2D>();
+    //    transform.gameObject.AddComponent<PolygonCollider2D>();
+    //    var collider = transform.gameObject.GetComponent<PolygonCollider2D>();
     //    Transform joinWalls = transform.GetChild(2);
 
-    //    Vector2[] points = new Vector2[10];
-    //    points[0] = new Vector2(joinWalls.GetChild(0).position.x, joinWalls.GetChild(0).position.y);
+    //    Vector2[] points = new Vector2[11];
+    //    points[0] = new Vector2(joinWalls.GetChild(0).localPosition.x, joinWalls.GetChild(0).localPosition.y);
+    //    points[1] = new Vector2(joinWalls.GetChild(1).localPosition.x + 1, joinWalls.GetChild(1).localPosition.y);
+    //    points[2] = new Vector2(joinWalls.GetChild(3).localPosition.x + 1, joinWalls.GetChild(3).localPosition.y + 1);
+    //    points[3] = new Vector2(joinWalls.GetChild(2).localPosition.x, joinWalls.GetChild(2).localPosition.y + 1);
+
+    //    points[4] = new Vector2(joinWalls.GetChild(0).localPosition.x, joinWalls.GetChild(0).localPosition.y);
+    //    points[5] = new Vector2(joinWalls.GetChild(0).localPosition.x + 1, joinWalls.GetChild(0).localPosition.y + 1);
+    //    points[6] = new Vector2(joinWalls.GetChild(2).localPosition.x, joinWalls.GetChild(2).localPosition.y + 1);
+    //    points[7] = new Vector2(joinWalls.GetChild(3).localPosition.x, joinWalls.GetChild(3).localPosition.y);
+
+    //    points[8] = new Vector2(joinWalls.GetChild(1).localPosition.x + 1, joinWalls.GetChild(1).localPosition.y);
+    //    points[9] = new Vector2(joinWalls.GetChild(0).localPosition.x + 1, joinWalls.GetChild(0).localPosition.y + 1);
+    //    points[10] = new Vector2(joinWalls.GetChild(2).localPosition.x, joinWalls.GetChild(2).localPosition.y);
+
+    //    collider.points = points;
     //}
 }
