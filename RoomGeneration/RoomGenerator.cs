@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class RoomGenerator : MonoBehaviour
 {
-
+    
     public GameObject Floor;
     public GameObject Door;
     public GameObject Wall;
@@ -28,12 +28,14 @@ public class RoomGenerator : MonoBehaviour
 
     }
 
-    private void genRoom()
+    public void genRoom()
     {
         GameObject room = new GameObject();
         room.transform.parent = transform;
         room.name = "room";
         room.transform.position = transform.position;
         room.AddComponent<RoomTileMap>();
+        RoomTileMap rtm = room.GetComponent<RoomTileMap>();
+        PrevWallSide = rtm.nextSide;
     }
 }

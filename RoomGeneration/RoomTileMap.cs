@@ -14,8 +14,10 @@ public class RoomTileMap : MonoBehaviour
 
     public string nextSide;
 
+    private bool frame = true;
 
-    void Awake()
+
+    public void Awake()
     {
         RoomGenerator generator = transform.GetComponentInParent<RoomGenerator>();
 
@@ -27,16 +29,43 @@ public class RoomTileMap : MonoBehaviour
         minTiles = generator.MinTile;
         maxTile = generator.MaxTile;
         PrevRoomSide = generator.PrevWallSide;
-
-
+       
         Generate();
         nextSide = AddDoors();
+    }
+
+    private void Start()
+    {
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (frame)
+        {
+            if (PrevRoomSide == "DownWall")
+            {
+                GameObject player = GameObject.Find("Player");
+                player.transform.position = new Vector3(GameObject.Find("SpawnDoor").transform.position.x, GameObject.Find("SpawnDoor").transform.position.y - 1, -1);
+            }
+            if (PrevRoomSide == "UpWall")
+            {
+                GameObject player = GameObject.Find("Player");
+                player.transform.position = new Vector3(GameObject.Find("SpawnDoor").transform.position.x, GameObject.Find("SpawnDoor").transform.position.y + 1, -1);
+            }
+            if (PrevRoomSide == "LeftWall")
+            {
+                GameObject player = GameObject.Find("Player");
+                player.transform.position = new Vector3(GameObject.Find("SpawnDoor").transform.position.x - 1, GameObject.Find("SpawnDoor").transform.position.y, -1);
+            }
+            if (PrevRoomSide == "RightWall")
+            {
+                GameObject player = GameObject.Find("Player");
+                player.transform.position = new Vector3(GameObject.Find("SpawnDoor").transform.position.x + 1, GameObject.Find("SpawnDoor").transform.position.y, -1);
+            }
+            frame = false;
+        }
     }
 
     private void Generate()
@@ -177,9 +206,12 @@ public class RoomTileMap : MonoBehaviour
         GameObject _spawnDoor = Instantiate(SpawnDoor, _wallToSpawnDoor.transform.position, _wallToSpawnDoor.transform.rotation);
         GameObject _nextRoomDoor = Instantiate(NextRoomDoor, _wallToNextRoomDoor.transform.position, _wallToNextRoomDoor.transform.rotation);
 
+
         _spawnDoor.name = "SpawnDoor";
         _spawnDoor.transform.parent = transform.GetChild(1);
         _spawnDoor.tag = "Respawn";
+
+
         _nextRoomDoor.name = "NexRoomDoor";
         _nextRoomDoor.transform.parent = transform.GetChild(1);
         _nextRoomDoor.tag = "Finish";
